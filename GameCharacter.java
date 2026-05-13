@@ -1,5 +1,5 @@
 
-public class GameCharacter {
+public abstract class GameCharacter {
     
     public static final String DEFAULT_NAME = "default";
     public static final String DEFAULT_CHARACTER_CLASS = "default";
@@ -8,6 +8,8 @@ public class GameCharacter {
     public static final int DEFAULT_EXP_POINTS = 0;
     public static final int DEFAULT_HIT_POINTS = 50;
     public static final int DEFAULT_ARMOR_CLASS = 0;
+    public static final Weapon DEFAULT_WEAPON1 = new Weapon("rusty sword", 1, 1, 1);
+    public static final Weapon DEFAULT_WEAPON2 = new Weapon("rusty sword", 1, 1, 1);
 
     private String name;
     private String characterClass;
@@ -29,82 +31,166 @@ public class GameCharacter {
         this.expPoints = DEFAULT_EXP_POINTS;
         this.hitPoints = DEFAULT_HIT_POINTS;
         this.armorClass = DEFAULT_ARMOR_CLASS;
-        this.weapon1 = null;
-        this.weapon2 = null;
+        this.weapon1 = DEFAULT_WEAPON1;
+        this.weapon2 = DEFAULT_WEAPON2;
     }
     //constructor
     public GameCharacter(String name, String characterClass, String alignment, int gold, int expPoints, int hitPoints, int armorClass, Weapon weapon1, Weapon weapon2) {
-        if (damage < 0 || range < 0 || attackBonus < 0 || name == null || name.length() <= 0) {
+        if (gold < 0 || expPoints < 0 || hitPoints < 0 || armorClass < 0 || name == null || name.length() <= 0
+                || characterClass == null || characterClass.length() <= 0 || alignment == null
+                || alignment.length() <= 0) {
             System.out.println("ERROR: data out of bounds");
             System.exit(0);
         }
-        this.name = DEFAULT_NAME;
-        this.characterClass = DEFAULT_CHARACTER_CLASS;
-        this.alignment = DEFAULT_ALIGNMENT;
-        this.gold = DEFAULT_GOLD;
-        this.expPoints = DEFAULT_EXP_POINTS;
-        this.hitPoints = DEFAULT_HIT_POINTS;
-        this.armorClass = DEFAULT_ARMOR_CLASS;
-        this.weapon1 = null;
-        this.weapon2 = null;
+        this.name = name;
+        this.characterClass = characterClass;
+        this.alignment = alignment;
+        this.gold = gold;
+        this.expPoints = expPoints;
+        this.hitPoints = hitPoints;
+        this.armorClass = armorClass;
+        this.weapon1 = weapon1;
+        this.weapon2 = weapon2;
     }
     //copy contructor
-    public GameCharacter(Weapon other) {
-        if (other.damage < 0 || other.range < 0 || other.attackBonus < 0 || other.name == null || other.name.length() <= 0) 
-        {
+    public GameCharacter(GameCharacter other) {
+        if (other.gold < 0 || other.expPoints < 0 || other.hitPoints < 0 || other.armorClass < 0 || other.name == null
+                || other.name.length() <= 0 || other.characterClass == null || other.characterClass.length() <= 0
+                || other.alignment == null || other.alignment.length() <= 0) {
             System.out.println("ERROR: data out of bounds");
             System.exit(0);
         }
         this.name = other.name;
-        this.damage = other.damage;
-        this.range = other.range;
-        this.attackBonus = other.attackBonus;
+        this.characterClass = other.characterClass;
+        this.alignment = other.alignment;
+        this.gold = other.gold;
+        this.expPoints = other.expPoints;
+        this.hitPoints = other.hitPoints;
+        this.armorClass = other.armorClass;
+        this.weapon1 = other.weapon1;
+        this.weapon2 = other.weapon2;
     }
-    //accessor
+
+    // accessor
     public String getName() {
         return this.name;
     }
-    //mutator
+
+    // mutator
     public void setName(String name) {
         this.name = name;
     }
-    //accessor
-    public int getDamage() {
-        return this.damage;
+
+    // accessor
+    public String getCharacterClass() {
+        return this.characterClass;
     }
-    //mutator
-    public void setDamage(int damage) {
-        this.damage = damage;
+
+    // mutator
+    public void setCharacterClass(String characterClass) {
+        this.characterClass = characterClass;
     }
-    //accessor
-    public int getRange() {
-        return this.range;
+
+    // accessor
+    public String getAlignment() {
+        return this.alignment;
     }
-    //mutator
-    public void setRange(int range) {
-        this.range = range;
+
+    // mutator
+    public void setAlignment(String alignment) {
+        this.alignment = alignment;
     }
-    public int getAttackBonus() {
-        return this.attackBonus;
+
+    // accessor
+    public int getGold() {
+        return this.gold;
     }
-    //mutator
-    public void setAttackBonus(int attackBonus) {
-        this.attackBonus = attackBonus;
+
+    // mutator
+    public void setGold(int gold) {
+        this.gold = gold;
     }
+
+    // accessor
+    public int getExpPoints() {
+        return this.expPoints;
+    }
+
+    // mutator
+    public void setExpPoints(int expPoints) {
+        this.expPoints = expPoints;
+    }
+
+    // accessor
+    public int getHitPoints() {
+        return this.hitPoints;
+    }
+
+    // mutator
+    public void setHitPoints(int hitPoints) {
+        this.hitPoints = hitPoints;
+    }
+
+    // accessor
+    public int getArmorClass() {
+        return this.armorClass;
+    }
+
+    // mutator
+    public void setArmorClass(int armorClass) {
+        this.armorClass = armorClass;
+    }
+
+    // accessor
+    public Weapon getWeapon1() {
+        return this.weapon1;
+    }
+
+    // mutator
+    public void setWeapon1(Weapon weapon1) {
+        this.weapon1 = weapon1;
+    }
+
+    // accessor
+    public Weapon getWeapon2() {
+        return this.weapon2;
+    }
+
+    // mutator
+    public void setWeapon2(Weapon weapon2) {
+        this.weapon2 = weapon2;
+    }
+
 
     @Override
     public boolean equals(Object o) {
         if (o == null || this.getClass() != o.getClass())
             return false;
-        Weapon that = (Weapon) o;
-        return this.damage == that.damage &&
-                this.range == that.range &&
-                this.attackBonus == that.attackBonus &&
-                this.name.equals(that.name);
+        GameCharacter that = (GameCharacter) o;
+        return this.gold == that.gold &&
+                this.expPoints == that.expPoints &&
+                this.hitPoints == that.hitPoints &&
+                this.armorClass == that.armorClass &&
+                this.name.equals(that.name) &&
+                this.characterClass.equals(that.characterClass) &&
+                this.alignment.equals(that.alignment) &&
+                this.weapon1 == that.weapon1 &&
+                this.weapon2 == that.weapon2;
     }
     @Override
     public String toString() {
-        return String.format("Name: %s\nDamage: %d\nRange: %d\nAttack Bonus: %d", this.name, this.damage, this.range, this.attackBonus);
+        return String.format(
+                "===========\nName: %s\nCharacter Class: %s\nAlignment: %s\nGold: %d\nExp: %d\nArmor Class: %d\nHitpoints %d\nWeapon 1: %s\nWeapon 2: %s\n==========",
+                this.name, this.characterClass, this.alignment,
+                this.gold, this.expPoints, this.armorClass, this.hitPoints, this.weapon1.getName(),
+                this.weapon2.getName());
     }
+
+    // Create 2 abstract methods, assist and attack, that both take in a
+    // GameCharacter object to interact with. Note the different return types
+    // (details below).
+    public abstract void assist(GameCharacter target);
+
+    public abstract boolean attack(GameCharacter target);
     
 }
